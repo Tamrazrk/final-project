@@ -22,7 +22,6 @@ const RegisterForm = () => {
     e.preventDefault();
 
     dispatch(register(formData));
-    console.log('Form data submitted:', formData);
   };
 
   return (

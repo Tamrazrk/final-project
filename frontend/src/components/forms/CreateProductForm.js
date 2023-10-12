@@ -11,10 +11,11 @@ import { createProduct, updateProduct } from '../../features/products/productSli
 import { Loader } from '../styles/Global.styled';
 import { useParams } from 'react-router-dom';
 import { add } from '../../features/cart/cartSlice';
+import { toast } from 'react-toastify';
 
 export default function CreateProductForm() {
   const [image_url, set_image_url] = useState(null);
-  const [option, setOption] = useState('');
+  const [option, setOption] = useState();
   const [fetching, setFetching] = useState(false);
   const [isMe, setIsMe] = useState(false);
   const [product, setProduct] = useState({});
@@ -113,6 +114,12 @@ export default function CreateProductForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const { name, description, price, category } = formData;
+    if (!name || !description || !price || !category) {
+      toast.error("Please fill all fields");
+      return;
+    }
+
     if (!id) {
       dispatch(createProduct({ ...formData, image_url: image_url }));
       resetForm();
@@ -165,7 +172,7 @@ export default function CreateProductForm() {
               placeholder='price'
               type='number'
               name="price"
-              value={price}
+              value={isMe ? price : Number(price).toFixed(2)}
               handleChange={handleChange}
               disabled={!isMe}
             />
@@ -173,6 +180,7 @@ export default function CreateProductForm() {
             options={options}
             value={option}
             placeholder="Categories"
+          
             onChange={categoryChangeHandler}
             isDisabled={!isMe}
             />

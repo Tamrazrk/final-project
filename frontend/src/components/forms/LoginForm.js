@@ -20,11 +20,9 @@ const LoginForm = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-
     dispatch(login(formData));
 
-    console.log('Form data submitted:', formData);
+    e.preventDefault();
   };
 
   return (

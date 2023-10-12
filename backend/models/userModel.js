@@ -28,7 +28,7 @@ const userSchema = mongoose.Schema({
     },
     balance: {
         type: Number,
-        default: 1000,
+        default: 10000,
     },
     products: [{
         type: mongoose.Schema.Types.ObjectId,

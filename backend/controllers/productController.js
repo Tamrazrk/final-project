@@ -14,7 +14,6 @@ const createProduct = asyncHandler(async (req, res) => {
     await Product.create({ ...req.body, owner: ownerId });
 
     res.status(201).json({...req.body, owner: ownerId});
-
 });
 
 const getProducts = asyncHandler(async (req, res) => {

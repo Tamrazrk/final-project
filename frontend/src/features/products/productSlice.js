@@ -71,7 +71,9 @@ export const productSlice = createSlice({
         .addCase(createProduct.fulfilled, (state, action) => {
             state.isLoading = false;
             state.products.push(action.payload);
-            toast.success("Product created");
+            if(action.payload) {
+                toast.success("Product created");
+            }
         })
         .addCase(createProduct.rejected, (state, action) => {
             state.isLoading = false;

@@ -8,14 +8,24 @@ import Api from '../utils/Api';
 import { toast } from 'react-toastify';
 import { reset } from '../features/cart/cartSlice';
 import { spend } from '../features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function Cart() {
   const { products, count, cost } = useSelector(state => state.cart);
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector(state => state.auth.user);
 
   const onOrder = async () => {
+    const { address, country, postalCode, phone_number } = user;
+
+    if(!address || !country || !postalCode || !phone_number) {
+      toast.error("Fill up the profile info for checkout");
+      navigate('/profile');
+      return;
+    }
+
     if (count === 0) {
       toast.error("Add items to cart");
       return;
@@ -37,9 +47,6 @@ export default function Cart() {
       dispatch(reset());
       dispatch(spend(cost));
     }
-
-
-    console.log(response.data);
   }
 
   return (
@@ -53,7 +60,7 @@ export default function Cart() {
                 ) }
             </CartItemsContainer>
             <p>Total Quantity: <b>{count}</b></p>
-            <p>Total Price: <b>{cost}$</b></p>
+            <p>Total Price: <b>{Number(cost).toFixed(2)}$</b></p>
             <div className='order-button' onClick={onOrder}>
                   {!isLoading && "Order"}
                   {isLoading && <Loader size={15}/>}

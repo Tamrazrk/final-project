@@ -25,10 +25,12 @@ export default function Products() {
             <Skeleton className='skeleton' key={i}/>
           )
         }
-        {products?.map((product) => 
-          <Link to={"/product/"+product._id} key={product._id} className='link' >
+        {products.map((product, i) => 
+           
+          <Link to={"/product/"+product?._id} key={i} className='link' >
             <ProductCard product={product}/>
           </Link>
+          
         )}
       </ProductsContainer>
     </StyledProducts>

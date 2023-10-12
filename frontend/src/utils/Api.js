@@ -2,7 +2,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 // export const server = 'https://e-commerce-tech-service.onrender.com';
-export const server = 'https://e-commerce-tech-service.onrender.com';
+export const server = 'https://localhost:5000';
 
 function onError(error) {
     toast.error(error.response?.data.message);

@@ -77,7 +77,8 @@ export const authSlice = createSlice({
             state.user.balance -= action.payload; 
         },
         setUser: (state, action) => {
-            state.user = action.payload;
+            console.log("setUser");
+            state.user =  {...state.user, ...action.payload};
         }
     },
     extraReducers: (builder) => {
@@ -122,8 +123,9 @@ export const authSlice = createSlice({
         })
         .addCase(updateUser.fulfilled, (state, action) => {
             state.isLoading = false;
-            state.user = action.payload;
-            localStorage.setItem("user", JSON.stringify(action.payload));
+            const token = JSON.parse(localStorage.getItem("user")).token;
+            state.user = {token: token, ...action.payload };
+            localStorage.setItem("user", JSON.stringify({token: token, ...action.payload }));
             state.isError = false;
             toast.success("Successfuly updated");
 
